@@ -25,6 +25,10 @@ module.exports = {
 
   // ✅ Added this for multi-account rotation
   xAccounts,
+    telegram: {
+  botToken: process.env.TELEGRAM_BOT_TOKEN,
+  chatId: process.env.TELEGRAM_CHAT_ID,
+},
 
   bot: {
     keywords: (() => {
