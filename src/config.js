@@ -40,32 +40,13 @@ telegram: {
         : [];
       if (keywords.length === 0) {
         console.error("Error: No valid keywords in .env, using defaults");
-        return ["Song", "Afro beats", "Music", "Jazz"];
+        return ["Trust wallet","Metamask","Coinbase","Coinbase wallet","Blockchain wallet","Phantom wallet"
+];
       }
       console.log(`Loaded keywords: ${keywords.join(", ")}`);
       return keywords;
     })(),
 
-    // responseTexts: (() => {
-    //   try {
-    //     return process.env.RESPONSE_TEXTS
-    //       ? JSON.parse(process.env.RESPONSE_TEXTS)
-    //       : [
-    //           "I recently encountered a similar issue with Trust Wallet, but I was able to resolve it by contacting Trust Wallet's online support. I reached out to them through this link: at (trustdesk.assistance@gmail.com) I suggest that you also consider reaching out to them for assist",
-    //           "I will advise you to send their direct support a message for guidance at (trustdesk.assistance@gmail.com)",
-    //           "I faced this problem for a while, but it was fixed, and my wallet was restored after I complained to the live support at (trustdesk.assistance@gmail.com)",
-    //           "Are you having the same problem with your wallet that I did about an hour ago? 🙁🙁 Kindly get in touch with the active support staff at (trustdesk.assistance@gmail.com), they were really helpful",
-    //           "Omg😞 I thought I'm the only one having the same issues, but someone advise me to contact them at { trustdesk.assistance@gmail.com} they'll assist you too",
-    //           "Hey, if you didn't write to the active support team, your complains won't be notice, i wrote to 3 forms, but this was the one that responded immediately to me.( trustdesk.assistance@gmail.com)",
-    //           "I experienced same problem but it was rectified immediately after I wrote to their Live support at (trustdesk.assistance@gmail.com) their official platform below. I’ll advise you to contact them too.",
-    //         ];
-    //   } catch (error) {
-    //     console.error(
-    //       `Error parsing RESPONSE_TEXTS: ${error.message}, using default`
-    //     );
-    //     return [ "I recently encountered a similar issue with Trust Wallet, but I was able to resolve it by contacting Trust Wallet's online support. I reached out to them through this link: at (trustdesk.assistance@gmail.com) I suggest that you also consider reaching out to them for assist"];
-    //   }
-    // })(),
 
     responseTexts: [
               "I recently encountered a similar issue with Trust Wallet, but I was able to resolve it by contacting Trust Wallet's online support. I reached out to them through this link: at (trustdesk.assistance@gmail.com) I suggest that you also consider reaching out to them for assist",
