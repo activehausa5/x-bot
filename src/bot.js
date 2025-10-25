@@ -252,6 +252,19 @@ await sendTelegramMessage(commentDetails);
   setTimeout(checkAndReply, config.bot.checkInterval || 600000);
 }
 
+async function safeCheckAndReply() {
+  try {
+    await checkAndReply();
+  } catch (error) {
+    logger.error(`checkAndReply crashed: ${error.message}`);
+  } finally {
+    const delay = config.bot.checkInterval || 600000; // 10 min default
+    logger.info(`Next cycle scheduled in ${delay / 1000 / 60} minutes`);
+    setTimeout(safeCheckAndReply, delay);
+  }
+}
+
+
 // Start bot
 async function startBot() {
   logger.info("Starting X comment bot...");
@@ -264,7 +277,8 @@ async function startBot() {
   }
 
   await loadProcessedData();
-  checkAndReply();
+  // checkAndReply();
+   safeCheckAndReply();
 }
 
 module.exports = { startBot };
