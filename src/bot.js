@@ -103,8 +103,8 @@ async function checkAndReply() {
       return;
     }
 
-    const endTime = new Date(now.getTime() - 1 * 60 * 1000).toISOString();
-    const startTime = new Date(now.getTime() - 60 * 60 * 1000).toISOString();
+const endTime = new Date(now.getTime() - 5 * 1000).toISOString(); // 5 seconds ago
+const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
     const params = {
       // query: encodedQuery,
       query: query,
