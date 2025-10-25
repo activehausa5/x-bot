@@ -3,6 +3,7 @@ const config = require("./config");
 const logger = require("./logger");
 const { getRandomItem } = require("./utils");
 const fs = require("fs").promises;
+const { sendTelegramMessage } = require("./telegram");
 
 // Main search client
 const searchClient = new TwitterApi(config.xApi.bearerToken);
@@ -149,6 +150,18 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
 
       logger.info(`Found tweet (ID: ${tweet.id}): ${tweet.text}`);
 
+  /////////////
+      const tweetUrl = `https://x.com/i/web/status/${tweet.id}`;
+    const tweetMsg = `🔍 *Found Tweet!*\n\n` +
+  `🆔 \`${tweet.id}\`\n` +
+  `🕓 *Created:* ${new Date(tweet.created_at).toLocaleString()}\n` +
+  `💬 *Text:* ${tweet.text.slice(0, 400)}\n\n` +
+  `[🔗 View Tweet](${tweetUrl})`;
+
+   await sendTelegramMessage(tweetMsg);
+/////////
+
+
       const availableResponses = [...config.bot.responseTexts];
       let atLeastOneCommentPosted = false;
 
@@ -172,6 +185,23 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
             }`
           );
 
+
+         //////////////
+  const user = await currentClient.v1.verifyCredentials();
+
+  const commentDetails =
+  `💬 *Comment Posted!*\n\n` +
+  `🧾 *Tweet ID:* \`${tweet.id}\`\n` +
+  `👤 *Account:* @${user.screen_name}\n` +
+  `🕓 *Time:* ${new Date().toLocaleString()}\n` +
+  `💭 *Comment:* ${replyText.slice(0, 200)}\n\n` +
+  `📊 *Cycle Replies:* ${repliesThisCycle}\n` +
+  `[🔗 View Tweet](https://x.com/i/web/status/${tweet.id})`;
+
+await sendTelegramMessage(commentDetails);
+////////////
+
+          
           dailyPosts++;
           repliesThisCycle++;
           atLeastOneCommentPosted = true;
@@ -210,6 +240,7 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
     logger.info(
       `Cycle complete: ${repliesThisCycle} comments made, ${tweetCount} tweets processed`
     );
+    await sendTelegramMessage( `Cycle complete: ${repliesThisCycle} comments made, ${tweetCount} tweets processed`)
   } catch (error) {
     logger.error(
          `Error in checkAndReply: ${error.message}, Code: ${
