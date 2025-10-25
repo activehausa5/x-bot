@@ -103,7 +103,7 @@ async function checkAndReply() {
       return;
     }
 
-const endTime = new Date(now.getTime() - 5 * 1000).toISOString(); // 5 seconds ago
+const endTime = new Date(now.getTime() - 15 * 1000).toISOString(); 
 const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
     const params = {
       // query: encodedQuery,
