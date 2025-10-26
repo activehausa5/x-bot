@@ -170,7 +170,7 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
         if (availableResponses.length === 0) break;
 
         const replyText = getRandomItem(availableResponses);
-        availableResponses.splice(availableResponses.indexOf(replyText), 1);
+        // availableResponses.splice(availableResponses.indexOf(replyText), 1);
 
         const currentClient = getNextClient(); // ✅ Rotate between accounts
 
