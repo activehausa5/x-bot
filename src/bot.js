@@ -247,6 +247,10 @@ await sendTelegramMessage(commentDetails);
            error.code || "N/A"
          }, Details: ${JSON.stringify(error.data || {}, null, 2)}`
        );
+    logger.error(
+  `Error in checkAndReply: ${error.message}\nSTACK: ${error.stack}`
+);
+
   }
 
   setTimeout(checkAndReply, config.bot.checkInterval || 600000);
