@@ -38,7 +38,7 @@ function getNextClient() {
 }
 
 // Bot configuration values
-const commentsPerPost = config.bot.commentsPerPost || 9;
+const commentsPerPost = config.bot.commentsPerPost || 5;
 const dailyPostLimit = config.bot.dailyPostLimit || 1666;
 const maxTweetsPerCycle = 5; // Max tweets per cycle
 let dailyPosts = 0;
