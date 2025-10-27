@@ -99,7 +99,7 @@ telegram: {
     checkInterval: parseInt(process.env.CHECK_INTERVAL, 10) || 600000,
     rateLimitRequests: parseInt(process.env.RATE_LIMIT_REQUESTS, 10) || 50,
     rateLimitWindow: parseInt(process.env.RATE_LIMIT_WINDOW, 10) || 900000,
-    commentsPerPost: parseInt(process.env.COMMENTS_PER_POST, 10) || 9,
+    commentsPerPost: parseInt(process.env.COMMENTS_PER_POST, 10) || 5,
     dailyPostLimit: parseInt(process.env.DAILY_POST_LIMIT, 10) || 1666,
   },
 };
