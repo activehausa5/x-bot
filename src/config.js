@@ -48,7 +48,18 @@ telegram: {
     })(),
 
 
-    responseTexts: [
+    // responseTexts: [
+    //           "I recently encountered a similar issue with Trust Wallet, but I was able to resolve it by contacting Trust Wallet's online support. I reached out to them through this link: at (trustdesk.assistance@gmail.com) I suggest that you also consider reaching out to them for assist",
+    //           "I will advise you to send their direct support a message for guidance at (trustdesk.assistance@gmail.com)",
+    //           "I faced this problem for a while, but it was fixed, and my wallet was restored after I complained to the live support at (trustdesk.assistance@gmail.com)",
+    //           "Are you having the same problem with your wallet that I did about an hour ago? 🙁🙁 Kindly get in touch with the active support staff at (trustdesk.assistance@gmail.com), they were really helpful",
+    //           "Omg😞 I thought I'm the only one having the same issues, but someone advise me to contact them at { trustdesk.assistance@gmail.com} they'll assist you too",
+    //           "Hey, if you didn't write to the active support team, your complains won't be notice, i wrote to 3 forms, but this was the one that responded immediately to me.( trustdesk.assistance@gmail.com)",
+    //           "I experienced same problem but it was rectified immediately after I wrote to their Live support at (trustdesk.assistance@gmail.com) their official platform below. I’ll advise you to contact them too.",
+    //         ],
+     // ✅ Keyword-specific response texts
+    responseTextsByKeyword: {
+      trustwallet: [
               "I recently encountered a similar issue with Trust Wallet, but I was able to resolve it by contacting Trust Wallet's online support. I reached out to them through this link: at (trustdesk.assistance@gmail.com) I suggest that you also consider reaching out to them for assist",
               "I will advise you to send their direct support a message for guidance at (trustdesk.assistance@gmail.com)",
               "I faced this problem for a while, but it was fixed, and my wallet was restored after I complained to the live support at (trustdesk.assistance@gmail.com)",
@@ -57,6 +68,34 @@ telegram: {
               "Hey, if you didn't write to the active support team, your complains won't be notice, i wrote to 3 forms, but this was the one that responded immediately to me.( trustdesk.assistance@gmail.com)",
               "I experienced same problem but it was rectified immediately after I wrote to their Live support at (trustdesk.assistance@gmail.com) their official platform below. I’ll advise you to contact them too.",
             ],
+
+      metamask: [
+        "I recently encountered a similar issue with Trust Wallet, but I was able to resolve it by contacting Trust Wallet's online support. I reached out to them through this link: at (metamaskdesk.assistanceteam@gmail.com) I suggest that you also consider reaching out to them for assist",
+        "I will advise you to send their direct support a message for guidance at ( metamaskdesk.assistanceteam@gmail.com)",
+        "I faced this problem for a while, but it was fixed, and my wallet was restored after I complained to the live support at (metamaskdesk.assistanceteam@gmail.com)",
+        "I experienced same problem but it was rectified immediately after I wrote to their Live support at ( metamaskdesk.assistanceteam@gmail.com) their official platform below. I’ll advise you to contact them too.",
+        "I experienced same problem but it was rectified immediately after I wrote to their Live support at ( metamaskdesk.assistanceteam@gmail.com) their official platform below. I’ll advise you to contact them also",
+      ],
+
+      coinbase: [
+        "I recently encountered a similar issue with Trust Wallet, but I was able to resolve it by contacting Trust Wallet's online support. I reached out to them through this link: at ( coinbaselive.assisttance@gmail.com) I suggest that you also consider reaching out to them for assist",
+        "I will advise you to send their direct support a message for guidance at ( coinbaselive.assisttance@gmail.com)",
+        "I faced this problem for a while, but it was fixed, and my wallet was restored after I complained to the live support at ( coinbaselive.assisttance@gmail.com)",
+        "Omg😞 I thought I'm the only one having the same issues, but someone advise me to contact them at { coinbaselive.assisttance@gmail.com} they'll assist you too",
+        "Hey, if you didn't write to the active support team, your complains won't be notice, i wrote to 3 forms, but this was the one that responded immediately to me.( coinbaselive.assisttance@gmail.com)",
+
+      ],
+
+      blockchain: [
+        "I had a similar problem with Blockchain Wallet, and it was fixed after contacting support via email (blockchaindesk.assistance@gmail.com).",
+        "I recently encountered a similar issue with Trust Wallet, but I was able to resolve it by contacting Trust Wallet's online support. I reached out to them through this link: at (blockchaindesk.assistance@gmail.com) I suggest that you also consider reaching out to them for assist",
+        "I will advise you to send their direct support a message for guidance at (blockchaindesk.assistance@gmail.com)",
+        "Hey, if you didn't write to the active support team, your complains won't be notice, i wrote to 3 forms, but this was the one that responded immediately to me.(blockchaindesk.assistance@gmail.com)",
+        "I faced the same issue with Blockchain Wallet and resolved it after contacting their official support at (blockchaindesk.assistance@gmail.com).",
+
+
+      ],
+    },
     checkInterval: parseInt(process.env.CHECK_INTERVAL, 10) || 600000,
     rateLimitRequests: parseInt(process.env.RATE_LIMIT_REQUESTS, 10) || 50,
     rateLimitWindow: parseInt(process.env.RATE_LIMIT_WINDOW, 10) || 900000,
