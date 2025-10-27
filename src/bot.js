@@ -1,7 +1,8 @@
 const { TwitterApi } = require("twitter-api-v2");
 const config = require("./config");
 const logger = require("./logger");
-const { getRandomItem } = require("./utils");
+// const { getRandomItem } = require("./utils");
+const { getRandomItem, getResponseByKeyword } = require("./utils");
 const fs = require("fs").promises;
 const { sendTelegramMessage } = require("./telegram");
 
@@ -162,15 +163,21 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
 /////////
 
 
-      const availableResponses = [...config.bot.responseTexts];
+      // const availableResponses = [...config.bot.responseTexts];
       let atLeastOneCommentPosted = false;
 
       for (let i = 0; i < commentsPerPost; i++) {
         if (dailyPosts >= dailyPostLimit || repliesThisCycle >= 35) break;
-        if (availableResponses.length === 0) break;
+        // if (availableResponses.length === 0) break;
 
-        const replyText = getRandomItem(availableResponses);
+        // const replyText = getRandomItem(availableResponses);
         // availableResponses.splice(availableResponses.indexOf(replyText), 1);
+
+         // Determine response based on keyword in tweet text
+              const replyText = getResponseByKeyword(
+                tweet.text,
+                config.bot.responseTextsByKeyword
+              );
 
         const currentClient = getNextClient(); // ✅ Rotate between accounts
 
