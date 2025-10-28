@@ -62,6 +62,23 @@ function isIssueTweet(text) {
 }
 
 
+/////////
+// 🧠 Smart exclusion patterns (to skip tweets that look like our replies)
+const exclusionPatterns = [
+  /support@/i,                       // any support email
+  /https?:\/\/\S+/i,                 // any link
+  /official support/i,               // phrases like "official support"
+  /reach(?:ed)? out to support/i,    // "reach out to support" or "reached out to support"
+  /contact(?:ed)? support/i,         // "contact support" or "contacted support"
+  /issue (?:was|is) resolved/i,      // "issue was resolved"
+  /problem (?:was|is) fixed/i,       // "problem fixed"
+  /thanks.*support/i,                // "thanks support"
+  /resolved after/i,                 // "resolved after contacting"
+  /wallet.?support/i,                // "wallet support" or "wallet-support"
+];
+
+/////// 
+
 
 ////////////////////////////////////// 
 
@@ -185,7 +202,21 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
         continue;
       }
 
+
+// ////////
+
+// 🛑 Skip tweets that match exclusion patterns
+const textLower = tweet.text.toLowerCase();
+const isExcluded = exclusionPatterns.some((pattern) => pattern.test(textLower));
+if (isExcluded) {
+  console.log(`⏩ Skipped (exclusion matched): ${tweet.text}`);
+  continue; // Skip this tweet and move to next
+}
+///////     /////// // 
       ////////////// 
+
+
+      
 
       const tweetTime = new Date(tweet.created_at).getTime();
       const tweetDate = tweet.created_at.split("T")[0];
