@@ -68,13 +68,6 @@ const keywordPatterns = {
     "blockchainwallet",
     "blockchain.com",
     "block chain"
-  ],
-  "phantom": [
-    "phantom",
-    "phantom wallet",
-    "phantomwallet",
-    "phantomapp",
-    "phantom.app"
   ]
 };
 
