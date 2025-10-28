@@ -31,13 +31,54 @@ function getRandomItem(array) {
 }
 
 // ✅ Define flexible keyword patterns (with variations)
+// const keywordPatterns = {
+//   "trust wallet": ["trust wallet", "trustwallet", "trustwalletapp"],
+//   "metamask": ["metamask", "metamaskapp"],
+//   "coinbase": ["coinbase", "coinbase wallet", "coinbasewallet", "coinbaseapp"],
+//   "blockchain": ["blockchain", "blockchain wallet", "blockchain.com"],
+//   "phantom": ["phantom", "phantom wallet", "phantomapp"]
+// };
 const keywordPatterns = {
-  "trust wallet": ["trust wallet", "trustwallet", "trustwalletapp"],
-  "metamask": ["metamask", "metamaskapp"],
-  "coinbase": ["coinbase", "coinbase wallet", "coinbasewallet", "coinbaseapp"],
-  "blockchain": ["blockchain", "blockchain wallet", "blockchain.com"],
-  "phantom": ["phantom", "phantom wallet", "phantomapp"]
+  "trustwallet": [
+    "trustwallet",
+    "trust wallet",
+    "trustwalletapp",
+    "trustwallet.com",
+    "trustwalet",
+    "trustwllt"
+  ],
+  "metamask": [
+    "metamask",
+    "meta mask",
+    "metamaskapp",
+    "metamask.io",
+    "metmask"
+  ],
+  "coinbase": [
+    "coinbase",
+    "coinbase wallet",
+    "coinbasewallet",
+    "coinbaseapp",
+    "coinbase.com",
+    "coin base"
+  ],
+  "blockchain": [
+    "blockchain",
+    "blockchain wallet",
+    "blockchainwallet",
+    "blockchain.com",
+    "block chain"
+  ],
+  "phantom": [
+    "phantom",
+    "phantom wallet",
+    "phantomwallet",
+    "phantomapp",
+    "phantom.app"
+  ]
 };
+
+
 
 // ✅ Smart keyword-based response picker (improved matching)
 function getResponseByKeyword(tweetText, responseTextsByKeyword) {
