@@ -88,7 +88,22 @@ const exclusionPatterns = [
 
 ////////////////////////////////////// 
 
-
+// For Search Query////
+// 🧠 Smart exclusion terms — skip tweets that look resolved or spammy
+const exclusionTerms = [
+  '"thanks support"',
+  '"issue resolved"',
+  '"problem fixed"',
+  '"issue was solved"',
+  '"thanks for resolving"',
+  '"got my account back"',
+  '"team responded"',
+  '"resolved after"',
+  '"app working fine"',
+  'https',
+  't.co'
+];
+// ///////////
 // Bot configuration values
 const commentsPerPost = config.bot.commentsPerPost || 5;
 const dailyPostLimit = config.bot.dailyPostLimit || 1666;
@@ -145,18 +160,37 @@ async function checkAndReply() {
   try {
     logger.info("Checking for new posts...");
 
-    // Build keyword query
-    const query = config.bot.keywords
-      .map((k) => (k.includes(" ") ? `"${k}"` : k))
-      .join(" OR ");
-    // const encodedQuery = encodeURI(query);
-  logger.info(`Raw query: ${query}`);
-    // logger.info(`Encoded query: ${encodedQuery}`);
-    if (!query || query.trim() === "") {
-      logger.error("Error: Empty query, skipping cycle");
-      return;
-    }
+  //   // Build keyword query
+  //   const query = config.bot.keywords
+  //     .map((k) => (k.includes(" ") ? `"${k}"` : k))
+  //     .join(" OR ");
+  //   // const encodedQuery = encodeURI(query);
+  // logger.info(`Raw query: ${query}`);
+  //   // logger.info(`Encoded query: ${encodedQuery}`);
+  //   if (!query || query.trim() === "") {
+  //     logger.error("Error: Empty query, skipping cycle");
+  //     return;
+  //   }
+////////
+    // Build keyword query (include keywords)
+const keywordQuery = config.bot.keywords
+  .map((k) => (k.includes(" ") ? `"${k}"` : k))
+  .join(" OR ");
 
+// Build exclusion query (exclude phrases)
+const exclusionQuery = exclusionTerms.map((t) => `-${t}`).join(" ");
+
+// ✅ Combine all parts + exclude retweets
+const query = `${keywordQuery} ${exclusionQuery} -is:retweet`.trim();
+
+logger.info(`Raw query: ${query}`);
+
+if (!query || query.trim() === "") {
+  logger.error("Error: Empty query, skipping cycle");
+  return;
+}
+
+// ////////////
 const endTime = new Date(now.getTime() - 15 * 1000).toISOString(); 
 const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
     const params = {
