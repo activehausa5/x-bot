@@ -64,17 +64,23 @@ function isIssueTweet(text) {
 
 /////////
 // 🧠 Smart exclusion patterns (to skip tweets that look like our replies)
+
 const exclusionPatterns = [
-  /support@/i,                       // any support email
-  /https?:\/\/\S+/i,                 // any link
-  /official support/i,               // phrases like "official support"
-  /reach(?:ed)? out to support/i,    // "reach out to support" or "reached out to support"
-  /contact(?:ed)? support/i,         // "contact support" or "contacted support"
-  /issue (?:was|is) resolved/i,      // "issue was resolved"
-  /problem (?:was|is) fixed/i,       // "problem fixed"
-  /thanks.*support/i,                // "thanks support"
-  /resolved after/i,                 // "resolved after contacting"
-  /wallet.?support/i,                // "wallet support" or "wallet-support"
+  /support@/i,
+  /https?:\/\/\S+/i,
+  /thanks.*official support/i,          // only skip thank-you posts
+  /resolved after/i,
+  /got my account back/i,
+  /thanks.*support/i,
+  /thank.*team/i,
+  /issue (?:was|is|has been) (resolved|solved|fixed)/i,
+  /problem (?:was|is|has been) (resolved|solved|fixed)/i,
+  /thanks for resolving/i,
+  /team responded/i,
+  /app (?:now )?working fine/i,
+  /everything.?fine now/i,
+  /no longer.*issue/i,
+  /fixed after/i,
 ];
 
 /////// 
