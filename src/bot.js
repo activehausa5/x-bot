@@ -2,6 +2,7 @@ const { TwitterApi } = require("twitter-api-v2");
 const config = require("./config");
 const logger = require("./logger");
 // const { getRandomItem } = require("./utils");
+// const { getRandomItem, getResponseByKeyword } = require("./utils");
 const { getRandomItem, getResponseByKeyword } = require("./utils");
 const fs = require("fs").promises;
 const { sendTelegramMessage } = require("./telegram");
@@ -36,6 +37,34 @@ function getNextClient() {
   accountIndex = (accountIndex + 1) % postClients.length;
   return client;
 }
+
+
+// ///////////////////////////////////
+
+// 🆕 Added: Helper — detect hashtag-only tweets
+function hasOnlyHashtags(text) {
+  const cleaned = text.replace(/#\w+/g, "").trim();
+  return cleaned.length === 0;
+}
+
+// 🆕 Added: Helper — detect if tweet indicates an issue or problem
+function isIssueTweet(text) {
+  const issuePatterns = [
+    /can't\s+(open|access|login|withdraw)/i,
+    /not\s+(working|opening|responding|showing)/i,
+    /(error|issue|problem|bug|fail(ed)?|scam)/i,
+    /(stuck|lost|frozen|hacked)/i,
+    /(transaction|balance).*not.*(showing|working|loading)/i,
+    /need\s+help/i,
+    /support\s+(please|needed)/i,
+  ];
+  return issuePatterns.some((pattern) => pattern.test(text));
+}
+
+
+
+////////////////////////////////////// 
+
 
 // Bot configuration values
 const commentsPerPost = config.bot.commentsPerPost || 5;
@@ -140,6 +169,23 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
       if (processedTweetIds.has(tweet.id)) continue;
       if (dailyPosts >= dailyPostLimit || tweetCount >= maxTweetsPerCycle)
         break;
+
+
+       ///////////////
+
+// 🆕 Skip tweets that contain only hashtags
+      if (hasOnlyHashtags(tweet.text)) {
+        logger.info(`Skipped hashtag-only tweet: ${tweet.id}`);
+        continue;
+      }
+
+      // 🆕 Skip tweets that don't indicate an issue/problem
+      if (!isIssueTweet(tweet.text)) {
+        logger.info(`Skipped non-issue tweet: ${tweet.id}`);
+        continue;
+      }
+
+      ////////////// 
 
       const tweetTime = new Date(tweet.created_at).getTime();
       const tweetDate = tweet.created_at.split("T")[0];
