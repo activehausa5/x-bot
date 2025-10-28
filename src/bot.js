@@ -64,11 +64,20 @@ function isIssueTweet(text) {
 
 /////////
 // 🧠 Smart exclusion patterns (to skip tweets that look like our replies)
-
 const exclusionPatterns = [
-  /support@/i,
-  /https?:\/\/\S+/i,
-  /thanks.*official support/i,          // only skip thank-you posts
+  // 🚫 Spam / Scam detection
+  /support@/i,                     // any email like support@
+  /gmail\.com/i,                   // generic emails (common scam)
+  /https?:\/\/\S+/i,               // any links
+  /contact.*team/i,                // "contact team"
+  /official support/i,             // fake or misleading "official support"
+  /wallet.*help/i,                 // "wallet help"
+  /rectifyteam/i,                  // scam term seen in your example
+  /help(?:desk|center)/i,          // fake helpdesk phrases
+  /technical support/i,            // often scammy wording
+
+  // ✅ Positive or resolved posts (no need to reply)
+  /thanks.*official support/i,     // only skip thank-you posts
   /resolved after/i,
   /got my account back/i,
   /thanks.*support/i,
@@ -82,6 +91,8 @@ const exclusionPatterns = [
   /no longer.*issue/i,
   /fixed after/i,
 ];
+
+
 
 /////// 
 
