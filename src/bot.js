@@ -66,6 +66,7 @@ function isIssueTweet(text) {
 // 🧠 Smart exclusion patterns (to skip tweets that look like our replies)
 const exclusionPatterns = [
   // 🚫 Spam / Scam detection
+  /\b[\w._%+-]+\(?(at|@)\)?[\w.-]+\.[a-z]{2,}\b/i,  // catches "support (at) gmail.com"
   /support@/i,                     // any email like support@
   /gmail\.com/i,                   // generic emails (common scam)
   /https?:\/\/\S+/i,               // any links
