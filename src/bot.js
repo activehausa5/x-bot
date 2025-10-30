@@ -242,6 +242,7 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
        const tweets = response.data || [];
     totalQuotaUsed++; // search uses 1 unit
    logger.info(`📦 Found ${tweets.length} new tweets`);
+    // await sendTelegramMessage(`📦 Found ${tweets.length} new tweets`);
     } catch (error) {
      logger.error(
            `Search API error: ${error.message}, Code: ${
@@ -413,7 +414,7 @@ await sendTelegramMessage(commentDetails);
 
   }
 
-  setTimeout(checkAndReply, config.bot.checkInterval || 600000);
+  setTimeout(checkAndReply, config.bot.checkInterval || 1500000);
 }
 
 async function safeCheckAndReply() {
@@ -422,7 +423,7 @@ async function safeCheckAndReply() {
   } catch (error) {
     logger.error(`checkAndReply crashed: ${error.message}`);
   } finally {
-    const delay = config.bot.checkInterval || 600000; // 10 min default
+    const delay = config.bot.checkInterval || 1500000, // 25 minutes (1,500,000 ms)
     logger.info(`Next cycle scheduled in ${delay / 1000 / 60} minutes`);
     setTimeout(safeCheckAndReply, delay);
   }
@@ -433,8 +434,8 @@ async function safeCheckAndReply() {
 async function startBot() {
   logger.info("Starting X comment bot...");
   try {
-    const user = await defaultPostClient.v1.verifyCredentials();
-    logger.info(`Bot is configured to reply as: @${user.screen_name}`);
+    const username = accountUsernames[accountIndex] || "unknown";
+    logger.info(`Bot is configured to reply as: @${username}`);
   } catch (error) {
     logger.error(`Error fetching bot profile: ${error.message}`);
     logger.info("Continuing despite profile verification failure...");
