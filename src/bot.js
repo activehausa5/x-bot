@@ -423,7 +423,7 @@ async function safeCheckAndReply() {
   } catch (error) {
     logger.error(`checkAndReply crashed: ${error.message}`);
   } finally {
-    const delay = config.bot.checkInterval || 1500000, // 25 minutes (1,500,000 ms)
+    const delay = config.bot.checkInterval || 1500000; // 25 minutes (1,500,000 ms)
     logger.info(`Next cycle scheduled in ${delay / 1000 / 60} minutes`);
     setTimeout(safeCheckAndReply, delay);
   }
