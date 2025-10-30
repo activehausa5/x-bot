@@ -32,6 +32,25 @@ const postClients = config.xAccounts.length
     )
   : [defaultPostClient];
 
+/////////New added
+// ✅ Cache usernames on startup (saves 1000s of API calls!)
+const accountUsernames = [];
+(async () => {
+  for (const client of postClients) {
+    try {
+      const user = await client.v1.verifyCredentials();
+      accountUsernames.push(user.screen_name);
+      logger.info(`Loaded account: @${user.screen_name}`);
+    } catch (err) {
+      logger.warn(`Could not verify account: ${err.message}`);
+      accountUsernames.push("unknown");
+    }
+  }
+})();
+////// 
+
+
+
 function getNextClient() {
   const client = postClients[accountIndex];
   accountIndex = (accountIndex + 1) % postClients.length;
@@ -117,10 +136,11 @@ const exclusionTerms = [
 ];
 // ///////////
 // Bot configuration values
-const commentsPerPost = config.bot.commentsPerPost || 5;
-const dailyPostLimit = config.bot.dailyPostLimit || 1666;
+const commentsPerPost = config.bot.commentsPerPost || 3;
+const dailyPostLimit = config.bot.dailyPostLimit || 600;
 const maxTweetsPerCycle = 5; // Max tweets per cycle
 let dailyPosts = 0;
+let totalQuotaUsed = 0;
 let lastReset = Date.now();
 let processedTweetIds = new Set();
 
@@ -158,6 +178,7 @@ async function checkAndReply() {
   // Reset daily limits every 24 hours
   if (Date.now() - lastReset >= 24 * 60 * 60 * 1000) {
     dailyPosts = 0;
+    totalQuotaUsed = 0;
     lastReset = Date.now();
     processedTweetIds.clear();
     await saveProcessedData();
@@ -209,14 +230,18 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
       // query: encodedQuery,
       query: query,
       "tweet.fields": "id,text,created_at",
-      max_results: 10,
+      max_results: 5,
       start_time: startTime,
       end_time: endTime,
+      sort_order: "recency", // ensures newest first
     };
     logger.info(`API params: ${JSON.stringify(params, null, 2)}`);
     let response;
     try {
       response = await searchClient.v2.search(params);
+       const tweets = response.data || [];
+    totalQuotaUsed++; // search uses 1 unit
+   logger.info(`📦 Found ${tweets.length} new tweets`);
     } catch (error) {
      logger.error(
            `Search API error: ${error.message}, Code: ${
@@ -232,7 +257,7 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
 
     let tweetCount = 0;
     let repliesThisCycle = 0;
-    const delayBetweenPosts = 30000; // 30 seconds delay
+    const delayBetweenPosts = 40000; // 40 seconds delay
 
     for await (const tweet of response) {
       if (processedTweetIds.has(tweet.id)) continue;
@@ -314,21 +339,24 @@ if (isExcluded) {
           await currentClient.v2.tweet(replyText, {
             reply: { in_reply_to_tweet_id: tweet.id },
           });
+           totalQuotaUsed++;
+           dailyPosts++;
+          repliesThisCycle++;
+          atLeastOneCommentPosted = true;
 
           logger.info(
             `✅ Comment ${i + 1} posted to tweet ${tweet.id} using account #${
               accountIndex === 0 ? postClients.length : accountIndex
             }`
           );
-
-
          //////////////
-  const user = await currentClient.v1.verifyCredentials();
+  // const user = await currentClient.v1.verifyCredentials();
+  const username = accountUsernames[accountIndex] || "unknown";
 
   const commentDetails =
   `💬 *Comment Posted!*\n\n` +
   `🧾 *Tweet ID:* \`${tweet.id}\`\n` +
-  `👤 *Account:* @${user.screen_name}\n` +
+  `👤 *Account:* @${username}n` +
   `🕓 *Time:* ${new Date().toLocaleString()}\n` +
   `💭 *Comment:* ${replyText.slice(0, 200)}\n\n` +
   `📊 *Cycle Replies:* ${repliesThisCycle}\n` +
@@ -336,12 +364,8 @@ if (isExcluded) {
 
 await sendTelegramMessage(commentDetails);
 ////////////
-
+ await new Promise((r) => setTimeout(r, delayBetweenPosts));
           
-          dailyPosts++;
-          repliesThisCycle++;
-          atLeastOneCommentPosted = true;
-          await new Promise((r) => setTimeout(r, delayBetweenPosts));
         } catch (error) {
           // logger.error(
           //   `❌ Error posting comment ${i + 1}: ${error.message}, Code: ${
