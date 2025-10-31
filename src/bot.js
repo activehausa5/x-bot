@@ -66,7 +66,7 @@ function hasOnlyHashtags(text) {
   return cleaned.length === 0;
 }
 
-🆕 Added: Helper — detect if tweet indicates an issue or problem
+// 🆕 Added: Helper — detect if tweet indicates an issue or problem
 // function isIssueTweet(text) {
 //   const issuePatterns = [
 //     /can't\s+(open|access|login|withdraw)/i,
