@@ -209,7 +209,7 @@ const exclusionTerms = [
 ];
 // ///////////
 // Bot configuration values
-const commentsPerPost = config.bot.commentsPerPost || 3;
+const commentsPerPost = config.bot.commentsPerPost || 2;
 const dailyPostLimit = config.bot.dailyPostLimit || 600;
 const maxTweetsPerCycle = 5; // Max tweets per cycle
 let dailyPosts = 0;
@@ -315,7 +315,7 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
        const tweets = response.data || [];
     totalQuotaUsed++; // search uses 1 unit
    logger.info(`📦 Found ${tweets.length} new tweets`);
-    // await sendTelegramMessage(`📦 Found ${tweets.length} new tweets`);
+    await sendTelegramMessage(`📦 Found ${tweets.length} new tweets`);
     } catch (error) {
      logger.error(
            `Search API error: ${error.message}, Code: ${
@@ -506,7 +506,7 @@ async function safeCheckAndReply() {
   } catch (error) {
     logger.error(`checkAndReply crashed: ${error.message}`);
   } finally {
-    const delay = config.bot.checkInterval || 1500000; // 25 minutes (1,500,000 ms)
+    const delay = config.bot.checkInterval || 2700000; // 45 minutes (1,500,000 ms)
     logger.info(`Next cycle scheduled in ${delay / 1000 / 60} minutes`);
     setTimeout(safeCheckAndReply, delay);
   }
