@@ -303,7 +303,7 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
       // query: encodedQuery,
       query: query,
       "tweet.fields": "id,text,created_at",
-      max_results: 5,
+      max_results: 10,
       start_time: startTime,
       end_time: endTime,
       sort_order: "recency", // ensures newest first
