@@ -158,7 +158,45 @@ function isIssueTweet(rawText) {
 }
 
 
+// FOR WALLET ISSUES KEYWORDS
 
+// Add issue-related keywords (focused on real problems)
+const issueKeywords = [
+  "can't",
+  "cannot",
+  "unable",
+  "error",
+  "issue",
+  "problem",
+  "bug",
+  "fail",
+  "failed",
+  "failing",
+  "not working",
+  "not loading",
+  "stuck",
+  "frozen",
+  "lost",
+  "hacked",
+  "scam",
+  "withdrawal failed",
+  "withdraw issue",
+  "login error",
+  "transaction failed",
+  "approve failed",
+  "crash",
+  "revert",
+  "glitch",
+  "balance not showing",
+  "funds missing",
+  "seed phrase lost",
+  "account locked",
+  "compromised",
+  "gas too low",
+  "insufficient gas",
+];
+
+// END HERE
 
 /////////
 // 🧠 Smart exclusion patterns (to skip tweets that look like our replies)
@@ -292,8 +330,14 @@ const keywordQuery = config.bot.keywords
 // Build exclusion query (exclude phrases)
 const exclusionQuery = exclusionTerms.map((t) => `-${t}`).join(" ");
 
-// ✅ Combine all parts + exclude retweets
-const query = `${keywordQuery} ${exclusionQuery} -is:retweet`.trim();
+// Build issue query group
+const issueQuery = issueKeywords.map((k) => (k.includes(" ") ? `"${k}"` : k)).join(" OR ");    
+
+// // ✅ Combine all parts + exclude retweets
+// const query = `${keywordQuery} ${exclusionQuery} -is:retweet`.trim();
+    
+ // Combine wallet keywords + issue keywords (AND condition)
+const query = `(${keywordQuery}) (${issueQuery}) ${exclusionQuery} -is:retweet`.trim();
 
 logger.info(`Raw query: ${query}`);
 
