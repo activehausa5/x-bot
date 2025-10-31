@@ -67,90 +67,96 @@ function hasOnlyHashtags(text) {
 }
 
 🆕 Added: Helper — detect if tweet indicates an issue or problem
-function isIssueTweet(text) {
-  const issuePatterns = [
-    /can't\s+(open|access|login|withdraw)/i,
-    /not\s+(working|opening|responding|showing)/i,
-    /(error|issue|problem|bug|fail(ed)?|scam)/i,
-    /(stuck|lost|frozen|hacked)/i,
-    /(transaction|balance).*not.*(showing|working|loading)/i,
-    /need\s+help/i,
-    /support\s+(please|needed)/i,
-  ];
-  return issuePatterns.some((pattern) => pattern.test(text));
-}
 // function isIssueTweet(text) {
 //   const issuePatterns = [
-//     // existing general problem patterns
-//     /can't\s+(open|access|login|withdraw|sell|buy|swap|transfer)/i,
+//     /can't\s+(open|access|login|withdraw)/i,
 //     /not\s+(working|opening|responding|showing)/i,
 //     /(error|issue|problem|bug|fail(ed)?|scam)/i,
 //     /(stuck|lost|frozen|hacked)/i,
 //     /(transaction|balance).*not.*(showing|working|loading)/i,
 //     /need\s+help/i,
 //     /support\s+(please|needed)/i,
-
-//     // token / token symbol mentions (e.g. $ABC, token, tokens)
-//     /\$[A-Za-z]{2,6}\b/,                          // $TOKEN style
-//     /\b(token|tokens|tokenomics|tokenized)\b/i,
-
-//     // balances, missing tokens, not received, transfer issues
-//     /\b(not\s+received|not\s+credited|not\s+added|missing\s+token|token\s+missing)\b/i,
-//     /\b(received|credited).{0,40}\b(not|missing|zero)\b/i,
-//     /\b(transfer(ed)?|sent)\b.{0,60}\b(not\s+received|no(t)?\s+arrived|failed|lost)\b/i,
-
-//     // approvals / allowance problems
-//     /\b(approve|approval|allowance|allowances)\b/i,
-//     /(infinite|unlimited)\s+(approve|approval|allowance)/i,
-//     /\b(revok(e|ed)?|revoke(d)?)\b.*\b(approval|allowance)?/i,
-
-//     // tx / transaction status and short form "tx"
-//     /\b(tx|transaction)\b.*\b(failed|reverted|pending|stuck|dropped|error)\b/i,
-//     /\b(pending|stuck|dropped|dropped from mempool|dropped from network)\b/i,
-//     /\b(tx)\b.{0,20}\b(pending|reverted|failed)\b/i,
-
-//     // contract / contract address / token contract mentions (0x...)
-//     /\b0x[a-fA-F0-9]{40}\b/,                       // Ethereum-style address / contract
-//     /\b(contract|contract\s+address)\b/i,
-//     /\b(interact(ed)?\s+with|called)\b.*\b(contract)\b/i,
-
-//     // wallets & connectors
-//     /\b(meta-?mask|trust\s?wallet|coinbase\s?wallet|rainbow|ledger|trezor|walletconnect|wallet\s+connect|argent)\b/i,
-//     /\b(hot\s+wallet|cold\s+wallet|hardware\s+wallet)\b/i,
-
-//     // DEX / swap / liquidity related
-//     /\b(swap|swap failed|swap error|swap failed|swap reverted)\b/i,
-//     /\b(uniswap|pancakeswap|sushiswap|1inch|kyber|dex)\b/i,
-//     /\b(liquidity|liquidity\s+pool|lp\s+tokens)\b/i,
-//     /\b(honeypot|rugpull|rug pull|scam token|fake token)\b/i,
-
-//     // gas / fees / nonce / out of gas
-//     /\b(gas\s+(fee|price|limit)|out\s+of\s+gas|gas\s+too\s+low)\b/i,
-//     /\b(nonce|nonce\s+too\s+low|nonce\s+too\s+high)\b/i,
-
-//     // wallet security / seed phrase / private key / phishing
-//     /\b(seed\s+phrase|mnemonic|private\s+key|secret\s+key|backup\s+phrase)\b/i,
-//     /\b(phish(ing)?|phishy|fake\s+site|scam\s+site|malicious)\b/i,
-
-//     // common exchange / withdraw / deposit failure flavors
-//     /\b(withdraw|deposit)\b.{0,40}\b(failed|not\s+processed|not\s+credited|pending|stuck)\b/i,
-//     /\b(insufficient\s+balance|insufficient\s+funds|not\s+enough\s+gas)\b/i,
-
-//     // "can't approve", "can't swap", "can't sign"
-//     /can't\s+(approve|sign|swap|connect|confirm)/i,
-
-//     // "reverted by" or "VM Exception" or revert messages
-//     /\b(revert(ed)?|revert reason|VM\s+exception|execution\s+reverted)\b/i,
-
-//     // suspicious / blocked / delisted / removed
-//     /\b(delist(ed)?|removed|blocked|blacklist(ed)?|flagged)\b/i,
-
-//     // generic troubleshooting words often used with wallet/token issues
-//     /\b(troubleshoot|help\s+with|how\s+to\s+fix|bug\s+report)\b/i,
 //   ];
-
 //   return issuePatterns.some((pattern) => pattern.test(text));
 // }
+
+
+// function isIssueTweet(rawText) {
+//   // 🧹 Clean text — remove hashtags and URLs
+//   const text = rawText
+//     .replace(/#\w+/g, "")
+//     .replace(/https?:\/\/\S+/g, "")
+//     .trim();
+
+//   // ✅ Supported wallet names
+//   const walletPatterns = [
+//     /\btrust\s?wallet\b/i,
+//     /\bmeta\s?mask\b/i,
+//     /\bcoinbase\b/i,
+//     /\bcoinbase\s?wallet\b/i,
+//     /\bblockchain\s?wallet\b/i,
+//   ];
+
+//   // ⚠️ Common issue/problem patterns
+//   const issuePatterns = [
+//     /can't\s+(open|access|login|withdraw|connect|swap|transfer|send|receive|approve)/i,
+//     /not\s+(working|opening|responding|showing|connecting|loading|syncing)/i,
+//     /(error|issue|problem|bug|fail(ed)?|scam|glitch|crash|revert(ed)?)/i,
+//     /(stuck|lost|frozen|hacked|missing)/i,
+//     /(transaction|tx|transfer|balance).*not.*(showing|working|loading|received)/i,
+//     /need\s+(help|assistance|support)/i,
+//     /support\s+(please|needed|team)/i,
+//     /\b(token|tokens|approve|approval|allowance|gas|nonce|fee|slippage)\b.{0,40}\b(error|fail|stuck|not|issue|problem|insufficient)\b/i,
+//     /\b(insufficient|out\s+of\s+gas|gas\s+too\s+low|execution\s+reverted)\b/i,
+//     /\b(seed\s+phrase|private\s+key|phish(ing)?|fake\s+site|scam|malicious|compromised|hacked)\b/i,
+//   ];
+
+//   // ✅ Must contain both a wallet mention and an issue indicator
+//   const mentionsWallet = walletPatterns.some((pattern) => pattern.test(text));
+//   const mentionsIssue = issuePatterns.some((pattern) => pattern.test(text));
+
+//   return mentionsWallet && mentionsIssue;
+// }
+
+
+function isIssueTweet(rawText) {
+  // 🧹 Clean text — remove mentions, hashtags, and URLs
+  const text = rawText
+    .replace(/@\w+/g, "")       // remove @mentions
+    .replace(/#\w+/g, "")       // remove hashtags
+    .replace(/https?:\/\/\S+/g, "") // remove URLs
+    .trim();
+
+  // ✅ Supported wallet names (only plain text)
+  const walletPatterns = [
+    /\btrust\s+wallet\b/i,
+    /\bmeta\s?mask\b/i,
+    /\bcoinbase\b/i,
+    /\bcoinbase\s+wallet\b/i,
+    /\bblockchain\s+wallet\b/i,
+  ];
+
+  // ⚠️ Common issue/problem patterns
+  const issuePatterns = [
+    /can't\s+(open|access|login|withdraw|connect|swap|transfer|send|receive|approve)/i,
+    /not\s+(working|opening|responding|showing|connecting|loading|syncing)/i,
+    /(error|issue|problem|bug|fail(ed)?|scam|glitch|crash|revert(ed)?)/i,
+    /(stuck|lost|frozen|hacked|missing)/i,
+    /(transaction|tx|transfer|balance).*not.*(showing|working|loading|received)/i,
+    /need\s+(help|assistance|support)/i,
+    /support\s+(please|needed|team)/i,
+    /\b(token|tokens|approve|approval|allowance|gas|nonce|fee|slippage)\b.{0,40}\b(error|fail|stuck|not|issue|problem|insufficient)\b/i,
+    /\b(insufficient|out\s+of\s+gas|gas\s+too\s+low|execution\s+reverted)\b/i,
+    /\b(seed\s+phrase|private\s+key|phish(ing)?|fake\s+site|scam|malicious|compromised|hacked)\b/i,
+  ];
+
+  // ✅ Must contain both a wallet mention in plain text and an issue keyword
+  const mentionsWallet = walletPatterns.some((pattern) => pattern.test(text));
+  const mentionsIssue = issuePatterns.some((pattern) => pattern.test(text));
+
+  return mentionsWallet && mentionsIssue;
+}
+
 
 
 
