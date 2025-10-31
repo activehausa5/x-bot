@@ -321,7 +321,7 @@ const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
        const tweets = response.data || [];
     totalQuotaUsed++; // search uses 1 unit
    logger.info(`📦 Found ${tweets.length} new tweets`);
-    await sendTelegramMessage(`📦 Found ${tweets.length} new tweets`);
+    // await sendTelegramMessage(`📦 Found ${tweets.length} new tweets`);
     } catch (error) {
      logger.error(
            `Search API error: ${error.message}, Code: ${
