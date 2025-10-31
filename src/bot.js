@@ -427,14 +427,16 @@ if (isExcluded) {
   // const user = await currentClient.v1.verifyCredentials();
   const username = accountUsernames[accountIndex] || "unknown";
 
-  const commentDetails =
+const commentDetails =
   `💬 *Comment Posted!*\n\n` +
   `🧾 *Tweet ID:* \`${tweet.id}\`\n` +
-  `👤 *Account:* @${username}n` +
+  `👤 *Account:* @${username}\n` + // ✅ fixed missing backslash before "n"
   `🕓 *Time:* ${new Date().toLocaleString()}\n` +
   `💭 *Comment:* ${replyText.slice(0, 200)}\n\n` +
   `📊 *Cycle Replies:* ${repliesThisCycle}\n` +
+  `🔋 *Quota Used:* ${totalQuotaUsed} / ~15000\n\n` + // ✅ moved quota to its own line
   `[🔗 View Tweet](https://x.com/i/web/status/${tweet.id})`;
+
 
 await sendTelegramMessage(commentDetails);
 ////////////
@@ -474,7 +476,15 @@ await sendTelegramMessage(commentDetails);
     logger.info(
       `Cycle complete: ${repliesThisCycle} comments made, ${tweetCount} tweets processed`
     );
-    await sendTelegramMessage( `Cycle complete: ${repliesThisCycle} comments made, ${tweetCount} tweets processed`)
+    // await sendTelegramMessage( `Cycle complete: ${repliesThisCycle} comments made, ${tweetCount} tweets processed`)
+    
+ await sendTelegramMessage(
+  `✅ *Cycle Complete!*\n\n` +
+  `💬 *Comments Made:* ${repliesThisCycle}\n` +
+  `🧾 *Tweets Processed:* ${tweetCount}\n` +
+  `📉 *Quota Used:* ${totalQuotaUsed} / ~15000\n` +
+  `🕓 *Time:* ${new Date().toLocaleString()}`
+)  
   } catch (error) {
     logger.error(
          `Error in checkAndReply: ${error.message}, Code: ${
@@ -510,7 +520,7 @@ async function startBot() {
     const username = accountUsernames[accountIndex] || "unknown";
     logger.info(`Bot is configured to reply as: @${username}`);
   } catch (error) {
-    logger.error(`Error fetching bot profile: ${error.message}`);
+    logger.error(`Error fetching bot profile: ${error.message}\nSTACK: ${error.stack}`);
     logger.info("Continuing despite profile verification failure...");
   }
 
