@@ -125,7 +125,7 @@ function hasOnlyHashtags(text) {
 function isIssueTweet(rawText) {
   // 🧹 Clean text — remove mentions, hashtags, and URLs
   const text = rawText
-    .replace(/@\w+/g, "")       // remove @mentions
+    // .replace(/@\w+/g, "")       // remove @mentions
     .replace(/#\w+/g, "")       // remove hashtags
     .replace(/https?:\/\/\S+/g, "") // remove URLs
     .trim();
@@ -322,8 +322,8 @@ const exclusionTerms = [
   'thanks for resolving',
   'got my account back',
   'app working fine',
-  // 'https',
-  // 't.co'
+  'https',
+  't.co'
 ];
 
 
