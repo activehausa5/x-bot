@@ -47,27 +47,28 @@ const keywordPatterns = {
     "trustwalet",
     "trustwllt"
   ],
-  "metamask": [
-    "metamask",
-    "meta mask",
-    "metamaskapp",
-    "metamask.io",
-    "metmask"
-  ],
-  "coinbase": [
-    "coinbase",
-    "coinbase wallet",
-    "coinbasewallet",
-    "coinbaseapp",
-    "coinbase.com",
-    "coin base"
-  ],
-  "blockchain": [
-    "blockchain",
-    "blockchain wallet",
-    "blockchainwallet",
-    "blockchain.com",
-    "block chain"
+  // "metamask": [
+  //   "metamask",
+  //   "meta mask",
+  //   "metamaskapp",
+  //   "metamask.io",
+  //   "metmask"
+  // ],
+  // "coinbase": [
+  //   "coinbase",
+  //   "coinbase wallet",
+  //   "coinbasewallet",
+  //   "coinbaseapp",
+  //   "coinbase.com",
+  //   "coin base"
+  // ],
+  "phantom": [
+    "phantom",
+    "phantom wallet",
+    "phantomwallet",
+    "phantom.app",
+    "phantomcrypto",
+    "phantom wallet app"
   ]
 };
 
