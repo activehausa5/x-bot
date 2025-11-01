@@ -220,6 +220,8 @@ function isIssueTweet(rawText) {
 const issueKeywords = [
   'error',
   'issue',
+  "can't",
+  'fail',
   'problem',
   'not working',
   'failed',
@@ -299,8 +301,8 @@ const exclusionTerms = [
   'thanks for resolving',
   'got my account back',
   'app working fine',
-  'https',
-  't.co'
+  // 'https',
+  // 't.co'
 ];
 
 
