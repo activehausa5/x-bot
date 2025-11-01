@@ -600,7 +600,7 @@ await sendTelegramMessage(commentDetails);
 
   }
 
-  setTimeout(checkAndReply, config.bot.checkInterval || 1500000);
+  setTimeout(checkAndReply, config.bot.checkInterval || 1200000);
 }
 
 async function safeCheckAndReply() {
@@ -609,7 +609,7 @@ async function safeCheckAndReply() {
   } catch (error) {
     logger.error(`checkAndReply crashed: ${error.message}`);
   } finally {
-    const delay = config.bot.checkInterval || 2700000; // 45 minutes (1,500,000 ms)
+    const delay = config.bot.checkInterval || 1200000; // 20 minutes (1200000 ms)
     logger.info(`Next cycle scheduled in ${delay / 1000 / 60} minutes`);
     setTimeout(safeCheckAndReply, delay);
   }
