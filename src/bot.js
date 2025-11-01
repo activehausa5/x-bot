@@ -208,7 +208,6 @@ const issueKeywords = [
   "lost",
   "hacked",
   "withdraw",
-  "withdrawal failed",
   "login",
   "transaction failed",
   "balance not showing",
@@ -216,7 +215,6 @@ const issueKeywords = [
   "seed phrase",
   "account locked",
   "compromised",
-  "bug",
   "crash"
 ];
 
