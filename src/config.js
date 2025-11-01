@@ -101,7 +101,7 @@ telegram: {
     // rateLimitWindow: parseInt(process.env.RATE_LIMIT_WINDOW, 10) || 900000,
     // commentsPerPost: parseInt(process.env.COMMENTS_PER_POST, 10) || 5,
     // dailyPostLimit: parseInt(process.env.DAILY_POST_LIMIT, 10) || 1666,
-    checkInterval: parseInt(process.env.CHECK_INTERVAL, 10) || 2700000, // 45 minutes (1,500,000 ms)
+    checkInterval: parseInt(process.env.CHECK_INTERVAL, 10) || 1200000, // 20 minutes (1200000 ms)
 rateLimitRequests: parseInt(process.env.RATE_LIMIT_REQUESTS, 10) || 25,
 rateLimitWindow: parseInt(process.env.RATE_LIMIT_WINDOW, 10) || 900000, // 15 minutes
 commentsPerPost: parseInt(process.env.COMMENTS_PER_POST, 10) || 2,
