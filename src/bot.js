@@ -218,20 +218,21 @@ function isIssueTweet(rawText) {
 
 
 const issueKeywords = [
-  '"error"',
-  '"issue"',
-  '"problem"',
-  '"not working"',
-  '"failed"',
-  '"stuck"',
-  '"hacked"',
-  '"withdraw"',
-  '"login"',
-  '"seed phrase"',
-  '"account locked"',
-  '"funds missing"',
-  '"balance not showing"'
+  'error',
+  'issue',
+  'problem',
+  'not working',
+  'failed',
+  'stuck',
+  'hacked',
+  'withdraw',
+  'login',
+  'seed phrase',
+  'account locked',
+  'funds missing',
+  'balance not showing'
 ];
+
                                                     
 
 
@@ -292,15 +293,16 @@ const exclusionPatterns = [
 // ];
 
 const exclusionTerms = [
-  '"thanks support"',
-  '"issue resolved"',
-  '"problem fixed"',
-  '"thanks for resolving"',
-  '"got my account back"',
-  '"app working fine"',
+  'thanks support',
+  'issue resolved',
+  'problem fixed',
+  'thanks for resolving',
+  'got my account back',
+  'app working fine',
   'https',
   't.co'
 ];
+
 
 // ///////////
 // Bot configuration values
