@@ -256,19 +256,31 @@ const exclusionPatterns = [
 
 // For Search Query////
 // 🧠 Smart exclusion terms — skip tweets that look resolved or spammy
+// const exclusionTerms = [
+//   '"thanks support"',
+//   '"issue resolved"',
+//   '"problem fixed"',
+//   '"issue was solved"',
+//   '"thanks for resolving"',
+//   '"got my account back"',
+//   '"team responded"',
+//   '"resolved after"',
+//   '"app working fine"',
+//   'https',
+//   't.co'
+// ];
+
 const exclusionTerms = [
   '"thanks support"',
   '"issue resolved"',
   '"problem fixed"',
-  '"issue was solved"',
   '"thanks for resolving"',
   '"got my account back"',
-  '"team responded"',
-  '"resolved after"',
   '"app working fine"',
   'https',
   't.co'
 ];
+
 // ///////////
 // Bot configuration values
 const commentsPerPost = config.bot.commentsPerPost || 2;
