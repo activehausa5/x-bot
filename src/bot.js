@@ -196,26 +196,43 @@ function isIssueTweet(rawText) {
 //   "insufficient gas",
 // ];
 
+// const issueKeywords = [
+//   "error",
+//   "issue",
+//   "problem",
+//   "fail",
+//   "not working",
+//   "stuck",
+//   "frozen",
+//   "lost",
+//   "hacked",
+//   "withdraw",
+//   "login",
+//   "transaction failed",
+//   "balance not showing",
+//   "funds missing",
+//   "seed phrase",
+//   "account locked",
+//   "compromised"
+// ];
+
+
 const issueKeywords = [
-  "can't",
-  "error",
-  "issue",
-  "problem",
-  "fail",
-  "not working",
-  "stuck",
-  "frozen",
-  "lost",
-  "hacked",
-  "withdraw",
-  "login",
-  "transaction failed",
-  "balance not showing",
-  "funds missing",
-  "seed phrase",
-  "account locked",
-  "compromised"
+  '"error"',
+  '"issue"',
+  '"problem"',
+  '"not working"',
+  '"failed"',
+  '"stuck"',
+  '"hacked"',
+  '"withdraw"',
+  '"login"',
+  '"seed phrase"',
+  '"account locked"',
+  '"funds missing"',
+  '"balance not showing"'
 ];
+                                                    
 
 
 // END HERE
