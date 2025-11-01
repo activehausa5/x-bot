@@ -438,6 +438,7 @@ const startTime = new Date(now.getTime() - 60 * 60 * 1000).toISOString();
     let response;
     try {
       response = await searchClient.v2.search(params);
+      ogger.info(response)
        // const tweets = response.data || [];
       const tweets = Array.from(response.tweets || []);
     totalQuotaUsed++; // search uses 1 unit
