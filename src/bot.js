@@ -81,20 +81,24 @@ function hasOnlyHashtags(text) {
 // }
 
 
+
+
+
 // function isIssueTweet(rawText) {
-//   // 🧹 Clean text — remove hashtags and URLs
+//   // 🧹 Clean text — remove mentions, hashtags, and URLs
 //   const text = rawText
-//     .replace(/#\w+/g, "")
-//     .replace(/https?:\/\/\S+/g, "")
+//     .replace(/@\w+/g, "")       // remove @mentions
+//     .replace(/#\w+/g, "")       // remove hashtags
+//     .replace(/https?:\/\/\S+/g, "") // remove URLs
 //     .trim();
 
-//   // ✅ Supported wallet names
+//   // ✅ Supported wallet names (only plain text)
 //   const walletPatterns = [
-//     /\btrust\s?wallet\b/i,
+//     /\btrust\s+wallet\b/i,
 //     /\bmeta\s?mask\b/i,
 //     /\bcoinbase\b/i,
-//     /\bcoinbase\s?wallet\b/i,
-//     /\bblockchain\s?wallet\b/i,
+//     /\bcoinbase\s+wallet\b/i,
+//     /\bblockchain\s+wallet\b/i,
 //   ];
 
 //   // ⚠️ Common issue/problem patterns
@@ -111,13 +115,12 @@ function hasOnlyHashtags(text) {
 //     /\b(seed\s+phrase|private\s+key|phish(ing)?|fake\s+site|scam|malicious|compromised|hacked)\b/i,
 //   ];
 
-//   // ✅ Must contain both a wallet mention and an issue indicator
+//   // ✅ Must contain both a wallet mention in plain text and an issue keyword
 //   const mentionsWallet = walletPatterns.some((pattern) => pattern.test(text));
 //   const mentionsIssue = issuePatterns.some((pattern) => pattern.test(text));
 
 //   return mentionsWallet && mentionsIssue;
 // }
-
 
 function isIssueTweet(rawText) {
   // 🧹 Clean text — remove mentions, hashtags, and URLs
@@ -127,13 +130,12 @@ function isIssueTweet(rawText) {
     .replace(/https?:\/\/\S+/g, "") // remove URLs
     .trim();
 
-  // ✅ Supported wallet names (only plain text)
+  // ✅ Supported wallet names (Trust Wallet & Phantom)
   const walletPatterns = [
-    /\btrust\s+wallet\b/i,
-    /\bmeta\s?mask\b/i,
-    /\bcoinbase\b/i,
-    /\bcoinbase\s+wallet\b/i,
-    /\bblockchain\s+wallet\b/i,
+    /\btrust\s?wallet\b/i,       // matches "trust wallet" or "trustwallet"
+    /\bphantom\s?wallet\b/i,     // matches "phantom wallet" or "phantomwallet"
+    /\bphantomapp\b/i,           // matches "phantomapp"
+    /\btrustwalletapp\b/i        // matches "trustwalletapp"
   ];
 
   // ⚠️ Common issue/problem patterns
@@ -150,12 +152,14 @@ function isIssueTweet(rawText) {
     /\b(seed\s+phrase|private\s+key|phish(ing)?|fake\s+site|scam|malicious|compromised|hacked)\b/i,
   ];
 
-  // ✅ Must contain both a wallet mention in plain text and an issue keyword
+  // ✅ Must contain both a wallet mention and an issue keyword
   const mentionsWallet = walletPatterns.some((pattern) => pattern.test(text));
   const mentionsIssue = issuePatterns.some((pattern) => pattern.test(text));
 
   return mentionsWallet && mentionsIssue;
 }
+
+
 
 
 // FOR WALLET ISSUES KEYWORDS
