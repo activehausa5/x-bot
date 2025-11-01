@@ -425,7 +425,7 @@ const startTime = new Date(now.getTime() - 60 * 60 * 1000).toISOString();
       // query: encodedQuery,
       query: query,
       "tweet.fields": "id,text,created_at",
-      max_results: 10,
+      max_results: 50,
       start_time: startTime,
       end_time: endTime,
       sort_order: "recency", // ensures newest first
@@ -438,7 +438,7 @@ const startTime = new Date(now.getTime() - 60 * 60 * 1000).toISOString();
       const tweets = Array.from(response.tweets || []);
     totalQuotaUsed++; // search uses 1 unit
    logger.info(`📦 Found ${tweets.length} new tweets`);
-    // await sendTelegramMessage(`📦 Found ${tweets.length} new tweets`);
+    await sendTelegramMessage(`📦 Found ${tweets.length} new tweets`);
     } catch (error) {
      logger.error(
            `Search API error: ${error.message}, Code: ${
