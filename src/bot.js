@@ -217,25 +217,42 @@ function isIssueTweet(rawText) {
 // ];
 
 
-const issueKeywords = [
-  'error',
-  'issue',
-  "can't",
-  'fail',
-  'problem',
-  'not working',
-  'failed',
-  'stuck',
-  'hacked',
-  'withdraw',
-  'login',
-  'seed phrase',
-  'account locked',
-  'funds missing',
-  'balance not showing'
-];
+// const issueKeywords = [
+//   'error',
+//   'issue',
+//   "can't",
+//   'fail',
+//   'problem',
+//   'not working',
+//   'failed',
+//   'stuck',
+//   'hacked',
+//   'withdraw',
+//   'login',
+//   'seed phrase',
+//   'account locked',
+//   'funds missing',
+//   'balance not showing'
+// ];
 
-                                                    
+
+const issueKeywords = [
+  "can't",
+  "error",
+  "issue",
+  "problem",
+  "fail",
+  "not working",
+  "stuck",
+  "hacked",
+  "withdraw",
+  "login",
+  "balance not showing",
+  "funds missing",
+  "seed phrase",
+  "account locked",
+  "compromised"
+];
 
 
 // END HERE
