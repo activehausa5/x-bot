@@ -197,20 +197,21 @@ function isIssueTweet(rawText) {
 // ];
 
 const issueKeywords = [
-  '"error"',
-  '"issue"',
-  '"problem"',
-  '"fail"',
-  '"not working"',
-  '"stuck"',
-  '"hacked"',
-  '"withdraw"',
-  '"login"',
-  '"balance not showing"',
-  '"funds missing"',
-  '"seed phrase"',
-  '"account locked"',
-  '"compromised"'
+  "can't",
+  "error",
+  "issue",
+  "problem",
+  "fail",
+  "not working",
+  "stuck",
+  "hacked",
+  "withdraw",
+  "login",
+  "balance not showing",
+  "funds missing",
+  "seed phrase",
+  "account locked",
+  "compromised"
 ];
 
 // END HERE
