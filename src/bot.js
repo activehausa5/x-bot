@@ -214,8 +214,7 @@ const issueKeywords = [
   "funds missing",
   "seed phrase",
   "account locked",
-  "compromised",
-  "crash"
+  "compromised"
 ];
 
 
