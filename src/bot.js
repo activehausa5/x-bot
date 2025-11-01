@@ -386,41 +386,47 @@ async function checkAndReply() {
   try {
     logger.info("Checking for new posts...");
 
-  //   // Build keyword query
-  //   const query = config.bot.keywords
-  //     .map((k) => (k.includes(" ") ? `"${k}"` : k))
-  //     .join(" OR ");
-  //   // const encodedQuery = encodeURI(query);
-  // logger.info(`Raw query: ${query}`);
-  //   // logger.info(`Encoded query: ${encodedQuery}`);
-  //   if (!query || query.trim() === "") {
-  //     logger.error("Error: Empty query, skipping cycle");
-  //     return;
-  //   }
-////////
-    // Build keyword query (include keywords)
-const keywordQuery = config.bot.keywords
-  .map((k) => (k.includes(" ") ? `"${k}"` : k))
-  .join(" OR ");
+    // Build keyword query
+    const query = config.bot.keywords
+      .map((k) => (k.includes(" ") ? `"${k}"` : k))
+      .join(" OR ");
+    // const encodedQuery = encodeURI(query);
+  logger.info(`Raw query: ${query}`);
+    // logger.info(`Encoded query: ${encodedQuery}`);
+    if (!query || query.trim() === "") {
+      logger.error("Error: Empty query, skipping cycle");
+      return;
+    }
 
-// Build exclusion query (exclude phrases)
-const exclusionQuery = exclusionTerms.map((t) => `-${t}`).join(" ");
 
-// Build issue query group
-const issueQuery = issueKeywords.map((k) => (k.includes(" ") ? `"${k}"` : k)).join(" OR ");    
 
-// // ✅ Combine all parts + exclude retweets
-// const query = `${keywordQuery} ${exclusionQuery} -is:retweet`.trim();
     
- // Combine wallet keywords + issue keywords (AND condition)
-const query = `(${keywordQuery}) (${issueQuery}) ${exclusionQuery} -is:retweet`.trim();
+////////
 
-logger.info(`Raw query: ${query}`);
+    
+    // Build keyword query (include keywords)
+// const keywordQuery = config.bot.keywords
+//   .map((k) => (k.includes(" ") ? `"${k}"` : k))
+//   .join(" OR ");
 
-if (!query || query.trim() === "") {
-  logger.error("Error: Empty query, skipping cycle");
-  return;
-}
+// // Build exclusion query (exclude phrases)
+// const exclusionQuery = exclusionTerms.map((t) => `-${t}`).join(" ");
+
+// // Build issue query group
+// const issueQuery = issueKeywords.map((k) => (k.includes(" ") ? `"${k}"` : k)).join(" OR ");    
+
+// // // ✅ Combine all parts + exclude retweets
+// // const query = `${keywordQuery} ${exclusionQuery} -is:retweet`.trim();
+    
+//  // Combine wallet keywords + issue keywords (AND condition)
+// const query = `(${keywordQuery}) (${issueQuery}) ${exclusionQuery} -is:retweet`.trim();
+
+// logger.info(`Raw query: ${query}`);
+
+// if (!query || query.trim() === "") {
+//   logger.error("Error: Empty query, skipping cycle");
+//   return;
+// }
 
 // ////////////
 const endTime = new Date(now.getTime() - 15 * 1000).toISOString(); 
