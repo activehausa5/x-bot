@@ -420,7 +420,7 @@ if (!query || query.trim() === "") {
 
 // ////////////
 const endTime = new Date(now.getTime() - 15 * 1000).toISOString(); 
-const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString();
+const startTime = new Date(now.getTime() - 60 * 60 * 1000).toISOString();
     const params = {
       // query: encodedQuery,
       query: query,
