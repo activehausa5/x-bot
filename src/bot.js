@@ -204,15 +204,22 @@ const issueKeywords = [
   "fail",
   "not working",
   "stuck",
+  "frozen",
+  "lost",
   "hacked",
   "withdraw",
+  "withdrawal failed",
   "login",
+  "transaction failed",
   "balance not showing",
   "funds missing",
   "seed phrase",
   "account locked",
-  "compromised"
+  "compromised",
+  "bug",
+  "crash"
 ];
+
 
 // END HERE
 
